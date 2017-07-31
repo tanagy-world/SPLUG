@@ -92,12 +92,14 @@ public class HomeController {
 
 		return "meetingLog";
 	}
-	@RequestMapping(value = "login", method = RequestMethod.GET)
-	public String login(Locale locale, Model model) {
-		logger.info("client at login", locale);
-
+	@RequestMapping(value = "login")
+	public String login() {
 		return "login";
 	}
 
-	
+	@RequestMapping(value = "signup")
+	public String signup() {
+		return "signup";
+	}
+
 }

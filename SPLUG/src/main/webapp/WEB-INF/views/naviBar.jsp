@@ -1,5 +1,4 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 
 <!DOCTYPE html>
@@ -59,8 +58,26 @@
 
 
 		<!-- /.dropdown -->
-		<li><a href="login">로그인<i class="fa fa-user fa-fw"></i>
-		</a> <!-- /.dropdown-user --></li>
+		<li><c:choose>
+				<c:when test="${sessionScope.userId == null}">
+					<a href="login">로그인<i class="fa fa-user fa-fw"></i>
+					</a>
+					<!-- /.dropdown-user -->
+				</c:when>
+				<c:otherwise>
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown">${sessionScope.userName} <i
+							class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+					</a>
+						<ul class="dropdown-menu dropdown-user">
+							<li><a href="#"><i class="fa fa-user fa-fw"></i> 회원 정보</a></li>
+							<li><a href="#"><i class="fa fa-gear fa-fw"></i> 설정</a></li>
+							<li class="divider"></li>
+							<li><a href="logout"><i class="fa fa-sign-out fa-fw"></i>로그아웃</a>
+							</li>
+						</ul> <!-- /.dropdown-user --></li>
+				</c:otherwise>
+			</c:choose></li>
 	</ul>
 	<!-- /.navbar-top-links -->
 
@@ -70,7 +87,7 @@
 
 				<li class="sidebar-search">
 					<div class="input-group custom-search-form">
-						<input type="text" class="form-control" placeholder="검색..."> 
+						<input type="text" class="form-control" placeholder="검색...">
 						<span class="input-group-btn">
 							<button class="btn btn-primary" type="button">
 								<i class="fa fa-search"></i>
