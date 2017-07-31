@@ -54,14 +54,20 @@
 					</tbody>
 				</table>
 
-
-				<br> <br> <br> <input type="hidden" name="bno"
-					value="${dto.bno}">
-					<input type="hidden" name="where"
-					value="${where}">
+				
+				<input type="hidden" name="bno" value="${dto.bno}"/>
+				<input type="hidden" name="writer" value="${dto.writer}"/>
+				<input type="hidden" name="title" value="${dto.title}"/>
+				<input type="hidden" name="content" value="${dto.content}"/>
+				<input type="hidden" name="regdate" value="${dto.regdate}"/>
+				<input type="hidden" name="viewcnt" value="${dto.viewcnt}"/>
+				<input type="hidden" name="where" value = "${where}" />
+				
+				<br> <br> <br> 
+				
 				<button type="button" id="btnList" class="btn btn-primary"><i class="fa fa-list"> 목록으로</i></button>
 				<button type="button" id="btnDelete" class="btn btn-primary"><i class="fa fa-times"> 삭제</i></button>
-				<button type="button" id="btnUpdate" class="btn btn-primary"><i class="fa fa-times"> 삭제</i></button>
+				<button type="button" id="btnUpdate" class="btn btn-primary"><i class="fa fa-pencil"> 수정</i></button>
 				
 			</form>
 
@@ -77,13 +83,23 @@
 	<script>
 	$(document).ready(function() {
 		$("#btnDelete").click(function() {
-			if (confirm("삭제하시겠습니까?")) {
-		
+			if (confirm("삭제 하시겠습니까?")) {
+				
 				document.form.method="POST";
-				document.form.action = "delete";
+				document.form.action = "Contentdelete";
 				document.form.submit();
 			}
 		});
+		
+		$("#btnUpdate").click(function() {
+			if (confirm("수정하시겠습니까?")) {
+	
+				document.form.method="POST";
+				document.form.action = "ContentUpdateView";
+				document.form.submit();
+			}
+		});
+
 
 		$("#btnList").click(function() {
 

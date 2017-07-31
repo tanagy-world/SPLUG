@@ -59,7 +59,7 @@ public class BoardController {
 	 public String writeContetent(@ModelAttribute BoardVO vo,@RequestParam String where,Model model) throws Exception {	
 		
 		String path="home";
-		
+				
 		if(where.equals("<자유게시판>"))
 			path="agora";
 
@@ -86,26 +86,41 @@ public class BoardController {
     	
         ModelAndView mv = new ModelAndView();
         // 뷰의 이름
-        mv.setViewName("write/boardView");
+        mv.setViewName("write/boardView");    
         // 뷰에 전달할 데이터
         mv.addObject("dto", boardService.read(bno));
         mv.addObject("where",where);
         
         boardService.increaseViewcnt(bno, session);
         
-        
+        return mv;
+    }
+    
+	//수정 페이지를 보여준다
+    @RequestMapping(value="ContentUpdateView",method=RequestMethod.POST)
+    public ModelAndView updateView(@ModelAttribute BoardVO vo, @RequestParam String where) throws Exception{
+  
+    	ModelAndView mv = new ModelAndView();
+    	
+        mv.setViewName("write/ContentUpdateView");    
+        mv.addObject("vo", vo);   
+        mv.addObject("where",where);
+    	
         return mv;
     }
 	
-    @RequestMapping(value="update", method=RequestMethod.POST)
+    @RequestMapping(value="ContentUpdate", method=RequestMethod.POST)
     public String update(@ModelAttribute BoardVO vo) throws Exception{
+    	    	
         boardService.update(vo);
-        return "redirect:list.do";
+        
+        return "redirect:agora";
     }
     
     // 05. 게시글 삭제
-    @RequestMapping(value="delete",method=RequestMethod.POST)
+    @RequestMapping(value="Contentdelete",method=RequestMethod.POST)
     public String delete(@RequestParam int bno , @RequestParam String where) throws Exception{
+    	System.out.println("ASDFASDFASDFASDFASDFASDF"+bno);
         boardService.delete(bno,where);
         return "redirect:agora";
     }

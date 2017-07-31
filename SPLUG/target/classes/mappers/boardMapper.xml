@@ -44,6 +44,7 @@
         UPDATE agora_board SET viewcnt = viewcnt + 1 
         WHERE bno = #{bno}
     </update>
+    
     <!-- 05. 게시글 수정처리 -->
     <update id="updateArticle">
         UPDATE agora_board SET
@@ -52,6 +53,7 @@
             writer = #{writer}
         WHERE bno = #{bno}
     </update>
+    
     <!-- 06. 게시글 삭제처리 -->
     <delete id="deleteArticle">
         DELETE FROM agora_board
