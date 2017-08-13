@@ -48,6 +48,10 @@ public class BoardController {
 		else if (where.equals("notification")){
 			where="<공지사항>";
 		}
+		else if (where.equals("recruit"))
+			where="<선배의 잡담>";
+		else if (where.equals("log"))
+			where="<회의록>";
 		
 		model.addAttribute("where" , where);
 
@@ -60,12 +64,23 @@ public class BoardController {
 		
 		String path="home";
 				
-		if(where.equals("<자유게시판>"))
+		if(where.equals("<자유게시판>")){
 			path="agora";
-
-	    boardService.create(vo);
-
-		
+		    boardService.create(vo,"agora");
+		}
+		else if(where.equals("<공지사항>")){
+			path="notification";
+		    boardService.create(vo,"notification");
+		}
+		else if(where.equals("<선배의 잡담>")){
+			path="recruit";
+		    boardService.create(vo,"recruit");
+		}
+		else if(where.equals("<회의록>")){
+			path="log";
+		    boardService.create(vo,"log");
+		}
+			
 		return "redirect:"+path;
 	}
 
@@ -76,30 +91,37 @@ public class BoardController {
     @RequestMapping(value="boardView", method=RequestMethod.GET)
     public ModelAndView boardView(@RequestParam int bno, @RequestParam String where ,HttpSession session) throws Exception{
 
+    	System.out.println("BoardCTL board view where : " + where);
+    	
+    	//조회수 증가
+        boardService.increaseViewcnt(bno, session, where);
+    	
+        ModelAndView mv = new ModelAndView();
+        // 뷰의 이름
+        mv.setViewName("write/boardView");    
+        // 뷰에 전달할 데이터
+        mv.addObject("dto", boardService.read(bno,where));
+             
 		if(where.equals("agora")){
 			where="<자유게시판> ";
 		}
 		else if (where.equals("notification")){
 			where="<공지사항> ";
 		}
-		
-    	
-        ModelAndView mv = new ModelAndView();
-        // 뷰의 이름
-        mv.setViewName("write/boardView");    
-        // 뷰에 전달할 데이터
-        mv.addObject("dto", boardService.read(bno));
+		else if (where.equals("recruit"))
+			where="<선배의 잡담>";
+		else if (where.equals("log"))
+			where="<회의록>";
+		        
         mv.addObject("where",where);
-        
-        boardService.increaseViewcnt(bno, session);
-        
+                        
         return mv;
     }
     
 	//수정 페이지를 보여준다
     @RequestMapping(value="ContentUpdateView",method=RequestMethod.POST)
     public ModelAndView updateView(@ModelAttribute BoardVO vo, @RequestParam String where) throws Exception{
-  
+ 
     	ModelAndView mv = new ModelAndView();
     	
         mv.setViewName("write/ContentUpdateView");    
@@ -110,19 +132,45 @@ public class BoardController {
     }
 	
     @RequestMapping(value="ContentUpdate", method=RequestMethod.POST)
-    public String update(@ModelAttribute BoardVO vo) throws Exception{
+    public String update(@ModelAttribute BoardVO vo,  @RequestParam String where) throws Exception{
+		
+		if(where.equals("<자유게시판>")){
+			where="agora";
+		}
+		else if(where.equals("<공지사항>")){
+			where="notification";
+		}
+		else if(where.equals("<선배의 잡담>")){
+			where="recruit";
+		}
+		else if(where.equals("<회의록>")){
+			where="log"; 
+		}    	
     	    	
-        boardService.update(vo);
+        boardService.update(vo, where);
         
-        return "redirect:agora";
+        return "redirect:"+where;
     }
     
     // 05. 게시글 삭제
     @RequestMapping(value="Contentdelete",method=RequestMethod.POST)
     public String delete(@RequestParam int bno , @RequestParam String where) throws Exception{
-    	System.out.println("ASDFASDFASDFASDFASDFASDF"+bno);
-        boardService.delete(bno,where);
-        return "redirect:agora";
+
+		if(where.equals("<자유게시판>")){
+			where="agora";
+		}
+		else if(where.equals("<공지사항>")){
+			where="notification";
+		}
+		else if(where.equals("<선배의 잡담>")){
+			where="recruit";
+		}
+		else if(where.equals("<회의록>")){
+			where="log";
+		}   	
+    	
+    	boardService.delete(bno,where);
+        return "redirect:"+where;
     }
 	
 }

@@ -48,23 +48,41 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "notification", method = RequestMethod.GET)
-	public String notification(Locale locale, Model model) {
+	public ModelAndView notification(Locale locale, Model model) throws Exception {
 		logger.info("client at home", locale);
 		
-		
-		return "notification";
+        List<BoardVO> list = boardService.listAll("notification");
+        
+        
+        // ModelAndView - 모델과 뷰
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("notification"); // 뷰를 list.jsp로 설정
+        mv.addObject("list", list); // 데이터를 저장
+        
+                
+		return mv;
 	}
 	@RequestMapping(value = "recruit", method = RequestMethod.GET)
-	public String recruit(Locale locale, Model model) {
+	public ModelAndView recruit(Locale locale, Model model) throws Exception {
 		logger.info("client at recruit", locale);
-			
-		return "recruit";
+		
+	    List<BoardVO> list = boardService.listAll("recruit");
+	    // ModelAndView - 모델과 뷰
+	    ModelAndView mv = new ModelAndView();
+	    mv.setViewName("recruit"); // 뷰를 list.jsp로 설정
+	    mv.addObject("list", list); // 데이터를 저장
+	        
+	                
+		return mv;
 	}
 	@RequestMapping(value = "agora", method = RequestMethod.GET)
 	public ModelAndView agora(Locale locale, Model model) throws Exception {
 		logger.info("client at agora", locale);
 		
-        List<BoardVO> list = boardService.listAll();
+        List<BoardVO> list = boardService.listAll("agora");
+        
+		System.out.println("where agora and list cnt : " + list.size());
+        
         // ModelAndView - 모델과 뷰
         ModelAndView mv = new ModelAndView();
         mv.setViewName("agora"); // 뷰를 list.jsp로 설정
@@ -86,18 +104,26 @@ public class HomeController {
 		
 		return "data";
 	}
-	@RequestMapping(value = "meetingLog", method = RequestMethod.GET)
-	public String meetingLog(Locale locale, Model model) {
+	@RequestMapping(value = "log", method = RequestMethod.GET)
+	public ModelAndView meetingLog(Locale locale, Model model) throws Exception {
 		logger.info("client at meetingLog", locale);
 
-		return "meetingLog";
+        List<BoardVO> list = boardService.listAll("log");
+        // ModelAndView - 모델과 뷰
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("log"); // 뷰를 list.jsp로 설정
+        mv.addObject("list", list); // 데이터를 저장
+            
+		return mv;
 	}
-	@RequestMapping(value = "login", method = RequestMethod.GET)
-	public String login(Locale locale, Model model) {
-		logger.info("client at login", locale);
-
+	@RequestMapping(value = "login")
+	public String login() {
 		return "login";
 	}
 
-	
+	@RequestMapping(value = "signup")
+	public String signup() {
+		return "login/signup";
+	}
+
 }

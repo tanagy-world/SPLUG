@@ -84,6 +84,7 @@
 	$(document).ready(function() {
 		$("#btnDelete").click(function() {
 			if (confirm("삭제 하시겠습니까?")) {
+				var where = document.form.where.value;
 				
 				document.form.method="POST";
 				document.form.action = "Contentdelete";
@@ -93,7 +94,8 @@
 		
 		$("#btnUpdate").click(function() {
 			if (confirm("수정하시겠습니까?")) {
-	
+				var where = document.form.where.value;
+
 				document.form.method="POST";
 				document.form.action = "ContentUpdateView";
 				document.form.submit();
@@ -107,8 +109,16 @@
 			
 			var where = document.form.where.value;
 			
-			if(where="<자유게시판>")
+			console.log(where);
+			
+			if(where=="<자유게시판>")
 				document.form.action = "agora";
+			else if(where=="<공지사항>")
+				document.form.action = "notification";
+			else if(where=="<회의록>")
+				document.form.action = "log";
+			else if(where=="<선배의 잡담>")
+				document.form.action = "recruit";
 
 			document.form.submit();
 

@@ -1,5 +1,4 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 
@@ -56,43 +55,46 @@
 							<th width="70%" data-priority="1" id="tech-companies-1-col-1">제목</th>
 							<th width="10%" data-priority="1" id="tech-companies-1-col-2">작성자</th>
 							<th width="10%" data-priority="3" id=tech-companies-1-col-3">작성일자</th>
-							<th width="5%" data-priority="3" id=tech-companies-1-col-3">조회수</th>
+							<th width="5%" data-priority="3" id=tech-companies-1-col-3"><i class="fa fa-eye"></i></th>
 
 						</tr>
 
 					</thead>
 					<tbody>
 
-						<c:forEach var="i" begin="1" end="20" step="1">
-
+						<c:forEach var="row" items="${list}">
 							<tr>
+
 								<td data-org-colspan="1" data-priority="3"
-									data-columns="tech-companies-1-col-1"><c:out value="${i}" /></td>
-								<td data-org-colspan="1" data-priority="1"
-									data-columns="tech-companies-1-col-2">제목으아아아아아 아이패드 언제와아아</td>
-								<td data-org-colspan="1" data-priority="1"
-									data-columns="tech-companies-1-col-3">조비퀏터스</td>
+									data-columns="tech-companies-1-col-1"><center>${row.bno}
+									</center></td>
+								<td class="ellip" data-org-colspan="1" data-priority="1"
+									data-columns="tech-companies-1-col-2"><a
+									href="boardView?bno=${row.bno}&where=notification">${row.title}</a></td>
+								<td class="ellip" data-org-colspan="1" data-priority="1"
+									data-columns="tech-companies-1-col-3"><center>${row.writer}
+									</center></td>
 								<td data-org-colspan="1" data-priority="3"
-									data-columns="tech-companies-1-col-4">12/7/8</td>
+									data-columns="tech-companies-1-col-4"><center>${row.regdate}
+									</center></td>
 								<td data-org-colspan="1" data-priority="3"
-									data-columns="tech-companies-1-col-4">582</td>
+									data-columns="tech-companies-1-col-4"><center>${row.viewcnt}</center></td>
 
 							</tr>
-
 						</c:forEach>
+
 
 					</tbody>
 				</table>
+				
 
 			</div>
-			<br>
-			<br>
+			<br> <br>
+
 			<c:set var="where" value="notification" />
-			<c:url value='write?where=${where}' var="writeUrl" />
+			<c:url value='boardWrite?where=${where}' var="writeUrl" />
 			<a href="${writeUrl}"><button type="button"
-					class="btn btn-primary">글쓰기</button></a> <br>
-			<br>
-			<br>
+					class="btn btn-primary">글쓰기</button></a> <br> <br> <br>
 			<br>
 
 
