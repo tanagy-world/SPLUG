@@ -101,12 +101,12 @@
 					</div> <!-- /input-group -->
 				</li>
 
-				<li><a href="notification"><i class="fa fa-dashboard fa-fw"></i>공지사항</a></li>
-				<li><a href="agora"><i class="fa fa-bar-chart-o fa-fw"></i>자유게시판</a></li>
-				<li><a href="galary"><i class="fa fa-table fa-fw"></i>갤러리</a></li>
-				<li><a href="data"><i class="fa fa-edit fa-fw"></i>자료실</a></li>
-				<li><a href="log"><i class="fa fa-wrench fa-fw"></i>회의록</a></li>
-				<li><a href="recruit"><i class="fa fa-wrench fa-fw"></i>선배의
+				<li><a href="notification"><i class="fa fa-star"></i> 공지사항</a></li>
+				<li><a href="agora"><i class="glyphicon glyphicon-comment"></i> 자유게시판</a></li>
+				<li><a href="galary"><i class="glyphicon glyphicon-picture"></i> 갤러리</a></li>
+				<li><a href="data"><i class="glyphicon glyphicon-file"></i> 자료실</a></li>
+				<li><a href="log"><i class="fa fa-list-alt"></i> 회의록</a></li>
+				<li><a href="recruit"><i class="fa fa-graduation-cap"></i> 선배의
 						잡담</a></li>
 
 			</ul>
@@ -137,12 +137,5 @@
 <script src="resources/bootstrap/dist/js/sb-admin-2.js"></script>
 
 <script src="resources/resTable/js/rwd-table.js"></script>
-
-
-<script>
-   $(function() {
-      $('.table-responsive').responsiveTable({data-pattern=""});
-   });
-</script>
 
 </html>

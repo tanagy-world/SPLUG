@@ -5,6 +5,15 @@
 <html>
 <head>
 	<title>공지사항</title>
+	
+	
+<script>
+    function list(page){
+        location.href="notification?curPage="+page+"&searchOption-${map.searchOption}"+"&keyword=${map.keyword}";
+    }
+</script>
+
+	
 </head>
 <body>
 
@@ -62,7 +71,7 @@
 					</thead>
 					<tbody>
 
-						<c:forEach var="row" items="${list}">
+						<c:forEach var="row" items="${map.list}">
 							<tr>
 
 								<td data-org-colspan="1" data-priority="3"
@@ -70,7 +79,7 @@
 									</center></td>
 								<td class="ellip" data-org-colspan="1" data-priority="1"
 									data-columns="tech-companies-1-col-2"><a
-									href="boardView?bno=${row.bno}&where=notification">${row.title}</a></td>
+									href="boardView?bno=${row.bno}&where=notification&curPage=${map.boardPager.curPage}">${row.title}</a></td>
 								<td class="ellip" data-org-colspan="1" data-priority="1"
 									data-columns="tech-companies-1-col-3"><center>${row.writer}
 									</center></td>
@@ -89,6 +98,54 @@
 				
 
 			</div>
+			<br>
+			
+			
+			<center>
+
+				<div class="dataTables_paginate paging_simple_numbers">
+					<ul class="pagination">
+						<c:if test="${map.boardPager.curBlock > 1}">
+							<li class="paginate_button previous " tabindex="0"><a
+								href="javascript:list('1')">처음</a></li>
+						</c:if>
+						<c:if test="${map.boardPager.curBlock > 1}">
+							<li class="paginate_button previous " tabindex="0"><a
+								href="javascript:list('${map.boardPager.prevPage}')">이전</a></li>
+						</c:if>
+
+
+						<c:forEach var="num" begin="${map.boardPager.blockBegin}"
+							end="${map.boardPager.blockEnd}">
+							<!-- **현재페이지이면 하이퍼링크 제거 -->
+							<c:choose>
+								<c:when test="${num == map.boardPager.curPage}">
+									<li class="paginate_button active"
+										aria-controls="dataTables-example" tabindex="0"><a
+										href="#">${num}</a></li>
+								</c:when>
+								<c:otherwise>
+									<li class="paginate_button " tabindex="0"><a
+										href="javascript:list('${num}')">${num}</a></li>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+
+
+						<c:if test="${map.boardPager.curBlock <= map.boardPager.totBlock}">
+							<li class="paginate_button next" tabindex="0"><a href="javascript:list('${map.boardPager.nextPage}')">다음</a></li>
+						</c:if>
+
+						<c:if test="${map.boardPager.curPage <= map.boardPager.totPage}">
+							<li class="paginate_button next" tabindex="0"><a href="javascript:list('${map.boardPager.totPage}')">끝</a></li>
+						</c:if>
+
+					</ul>
+
+				</div>
+
+			</center>
+			
 			<br> <br>
 
 			<c:set var="where" value="notification" />

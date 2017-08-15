@@ -1,7 +1,8 @@
 package com.ssu.persistence;
 
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -40,13 +41,10 @@ public class BoardDAOImpl implements BoardDAO {
     	else if(where.equals("recruit")){
     		return SqlSession.selectOne("com.ssu.mapper.boardMapper.viewRecruit", bno);
     	}
-    	else if(where.equals("log")){
+    	else{ //if(where.equals("log")){
     		return SqlSession.selectOne("com.ssu.mapper.boardMapper.viewLog", bno);
     	}
-    	else
-    		return SqlSession.selectOne("com.ssu.mapper.boardMapper.viewLog", bno);
 
-        
     }
     
     // 03. 게시글 수정
@@ -80,23 +78,29 @@ public class BoardDAOImpl implements BoardDAO {
     }
     // 05. 게시글 전체 목록
     @Override
-    public List<BoardVO> listAll(String where) throws Exception {
+    public List<BoardVO> listAll(int start, int end,String where) throws Exception {
+    	
+    	
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        // BETWEEN #{start}, #{end}에 입력될 값을 맵에 
+        map.put("start", start);
+        map.put("end", end-start);
 
     	if(where.equals("agora")){
-    		return SqlSession.selectList("com.ssu.mapper.boardMapper.listAllAgora");
+    		return SqlSession.selectList("com.ssu.mapper.boardMapper.listAllAgora",map);
     	}
     	else if(where.equals("notification")){
-    		return SqlSession.selectList("com.ssu.mapper.boardMapper.listAllNotification");
+    		return SqlSession.selectList("com.ssu.mapper.boardMapper.listAllNotification",map);
     	}
     	else if(where.equals("recruit")){
-    		return SqlSession.selectList("com.ssu.mapper.boardMapper.listAllRecruit");
+    		return SqlSession.selectList("com.ssu.mapper.boardMapper.listAllRecruit",map);
     	}
-    	else if(where.equals("log")){
-    		return SqlSession.selectList("com.ssu.mapper.boardMapper.listAllLog");
+    	else{ //if(where.equals("log")){
+    		return SqlSession.selectList("com.ssu.mapper.boardMapper.listAllLog",map);
     	}
     	 	
-		//일단 아무거나 ...
-    	return SqlSession.selectList("com.ssu.mapper.boardMapper.listAllRecruit");
+
     	
     }
     // 게시글 조회수 증가
@@ -112,6 +116,25 @@ public class BoardDAOImpl implements BoardDAO {
     	else if(where.equals("log"))
             SqlSession.update("com.ssu.mapper.boardMapper.increaseViewcntLog", bno);
     }
+    
+    //게시글 수 조회
+	@Override
+	public int countArticle(String where) {
+		
+    	if(where.equals("agora_board")){
+            return SqlSession.selectOne("com.ssu.mapper.boardMapper.countArticleAgora");
+    	}
+    	else if(where.equals("notification_board")){
+    		return SqlSession.selectOne("com.ssu.mapper.boardMapper.countArticleNotification");
+    	}
+    	else if(where.equals("recruit_board")){
+    		return SqlSession.selectOne("com.ssu.mapper.boardMapper.countArticleRecruit");
+    	}
+    	else{ //(where.equals("log_board")){
+    		return SqlSession.selectOne("com.ssu.mapper.boardMapper.countArticleLog");
+    	}
+				
+	}
 
  
 }

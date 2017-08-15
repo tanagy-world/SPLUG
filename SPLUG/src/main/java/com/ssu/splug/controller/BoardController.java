@@ -89,9 +89,8 @@ public class BoardController {
     // @RequestParam : get/post방식으로 전달된 변수 1개
     // HttpSession 세션객체
     @RequestMapping(value="boardView", method=RequestMethod.GET)
-    public ModelAndView boardView(@RequestParam int bno, @RequestParam String where ,HttpSession session) throws Exception{
-
-    	System.out.println("BoardCTL board view where : " + where);
+    public ModelAndView boardView(@RequestParam int bno, @RequestParam String where ,@RequestParam int curPage,
+    		HttpSession session) throws Exception{
     	
     	//조회수 증가
         boardService.increaseViewcnt(bno, session, where);
@@ -101,12 +100,13 @@ public class BoardController {
         mv.setViewName("write/boardView");    
         // 뷰에 전달할 데이터
         mv.addObject("dto", boardService.read(bno,where));
+        mv.addObject("curPage",curPage);
              
 		if(where.equals("agora")){
-			where="<자유게시판> ";
+			where="<자유게시판>";
 		}
 		else if (where.equals("notification")){
-			where="<공지사항> ";
+			where="<공지사항>";
 		}
 		else if (where.equals("recruit"))
 			where="<선배의 잡담>";

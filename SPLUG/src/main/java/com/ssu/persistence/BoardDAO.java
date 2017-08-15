@@ -16,7 +16,9 @@ public interface BoardDAO {
     // 04. 게시글 삭제
     public void delete(int bno,String where) throws Exception;
     // 05. 게시글 전체 목록
-    public List<BoardVO> listAll(String where) throws Exception;
+    public List<BoardVO> listAll(int start, int end,String where) throws Exception;
     // 06. 게시글 조회 증가
     public void increaseViewcnt(int bno,String where) throws Exception;
+    // 07. 전체 게시글 수 조회
+	public int countArticle(String where);
     }

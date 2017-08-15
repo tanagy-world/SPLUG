@@ -62,6 +62,8 @@
 				<input type="hidden" name="regdate" value="${dto.regdate}"/>
 				<input type="hidden" name="viewcnt" value="${dto.viewcnt}"/>
 				<input type="hidden" name="where" value = "${where}" />
+				<input type="hidden" name="curPage" value = "${curPage}" />
+				
 				
 				<br> <br> <br> 
 				
@@ -108,17 +110,16 @@
 			document.form.method="GET";
 			
 			var where = document.form.where.value;
-			
-			console.log(where);
-			
+			var curPage = document.form.curPage.value;
+						
 			if(where=="<자유게시판>")
-				document.form.action = "agora";
+				document.form.action = "agora?curPage="+curPage;
 			else if(where=="<공지사항>")
-				document.form.action = "notification";
+				document.form.action = "notification?curPage="+curPage;
 			else if(where=="<회의록>")
-				document.form.action = "log";
+				document.form.action = "log?curPage="+curPage;
 			else if(where=="<선배의 잡담>")
-				document.form.action = "recruit";
+				document.form.action = "recruit?curPage="+curPage;
 
 			document.form.submit();
 
