@@ -1,6 +1,6 @@
 package com.ssu.persistence;
 
-import java.util.List;
+import java.util.List; 
 
 import org.mybatis.spring.annotation.MapperScan;
 

@@ -101,6 +101,8 @@ public class BoardController {
         // 뷰에 전달할 데이터
         mv.addObject("dto", boardService.read(bno,where));
         mv.addObject("curPage",curPage);
+        
+        System.out.println("DTO  : " +  boardService.read(bno,where).getRecnt());
              
 		if(where.equals("agora")){
 			where="<자유게시판>";

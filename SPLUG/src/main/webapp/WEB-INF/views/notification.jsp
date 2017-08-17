@@ -79,7 +79,8 @@
 									</center></td>
 								<td class="ellip" data-org-colspan="1" data-priority="1"
 									data-columns="tech-companies-1-col-2"><a
-									href="boardView?bno=${row.bno}&where=notification&curPage=${map.boardPager.curPage}">${row.title}</a></td>
+									href="boardView?bno=${row.bno}&where=notification&curPage=${map.boardPager.curPage}">${row.title}</a>
+									<span style="color: red;">(${row.recnt}) </span></td>
 								<td class="ellip" data-org-colspan="1" data-priority="1"
 									data-columns="tech-companies-1-col-3"><center>${row.writer}
 									</center></td>
