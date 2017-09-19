@@ -52,6 +52,8 @@ public class BoardController {
 			where="<선배의 잡담>";
 		else if (where.equals("log"))
 			where="<회의록>";
+		else if (where.equals("data"))
+			where="<자료실>";
 		
 		model.addAttribute("where" , where);
 
@@ -79,6 +81,10 @@ public class BoardController {
 		else if(where.equals("<회의록>")){
 			path="log";
 		    boardService.create(vo,"log");
+		}
+		else if(where.equals("<자료실>")){
+			path="data";
+		    boardService.create(vo,"data");
 		}
 			
 		return "redirect:"+path;
@@ -114,6 +120,8 @@ public class BoardController {
 			where="<선배의 잡담>";
 		else if (where.equals("log"))
 			where="<회의록>";
+		else if (where.equals("data"))
+			where="<자료실>";
 		        
         mv.addObject("where",where);
                         
@@ -147,7 +155,10 @@ public class BoardController {
 		}
 		else if(where.equals("<회의록>")){
 			where="log"; 
-		}    	
+		} 
+		else if(where.equals("<자료실>")){
+			where="data"; 
+		}
     	    	
         boardService.update(vo, where);
         
@@ -169,7 +180,10 @@ public class BoardController {
 		}
 		else if(where.equals("<회의록>")){
 			where="log";
-		}   	
+		}
+		else if(where.equals("<자료실>")){
+			where="data";
+		}   
     	
     	boardService.delete(bno,where);
         return "redirect:"+where;

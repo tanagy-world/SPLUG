@@ -26,6 +26,8 @@ public class BoardDAOImpl implements BoardDAO {
     		SqlSession.insert("com.ssu.mapper.boardMapper.insertRecruit", vo);
     	else if(where.equals("log"))
     		SqlSession.insert("com.ssu.mapper.boardMapper.insertLog", vo);
+    	else if(where.equals("data"))
+    		SqlSession.insert("com.ssu.mapper.boardMapper.insertData", vo);
     }
     // 02. 게시글 상세보기
     @Override
@@ -40,6 +42,9 @@ public class BoardDAOImpl implements BoardDAO {
     	}
     	else if(where.equals("recruit")){
     		return SqlSession.selectOne("com.ssu.mapper.boardMapper.viewRecruit", bno);
+    	}
+    	else if(where.equals("data")){
+    		return SqlSession.selectOne("com.ssu.mapper.boardMapper.viewData", bno);
     	}
     	else{ //if(where.equals("log")){
     		return SqlSession.selectOne("com.ssu.mapper.boardMapper.viewLog", bno);
@@ -59,6 +64,8 @@ public class BoardDAOImpl implements BoardDAO {
             SqlSession.update("com.ssu.mapper.boardMapper.updateArticleRecruit", vo);
     	else if(where.equals("log"))
             SqlSession.update("com.ssu.mapper.boardMapper.updateArticleLog", vo);
+    	else if(where.equals("data"))
+            SqlSession.update("com.ssu.mapper.boardMapper.updateArticleData", vo);
  
     }
     
@@ -74,6 +81,9 @@ public class BoardDAOImpl implements BoardDAO {
             SqlSession.delete("com.ssu.mapper.boardMapper.deleteArticleRecruit",bno);
     	else if(where.equals("log"))
             SqlSession.delete("com.ssu.mapper.boardMapper.deleteArticleLog",bno);
+    	else if(where.equals("data"))
+            SqlSession.delete("com.ssu.mapper.boardMapper.deleteArticleData",bno);
+        
         
     }
     // 05. 게시글 전체 목록
@@ -96,6 +106,9 @@ public class BoardDAOImpl implements BoardDAO {
     	else if(where.equals("recruit")){
     		return SqlSession.selectList("com.ssu.mapper.boardMapper.listAllRecruit",map);
     	}
+    	else if(where.equals("data")){
+    		return SqlSession.selectList("com.ssu.mapper.boardMapper.listAllData",map);
+    	}
     	else{ //if(where.equals("log")){
     		return SqlSession.selectList("com.ssu.mapper.boardMapper.listAllLog",map);
     	}
@@ -115,6 +128,8 @@ public class BoardDAOImpl implements BoardDAO {
             SqlSession.update("com.ssu.mapper.boardMapper.increaseViewcntRecruit", bno);
     	else if(where.equals("log"))
             SqlSession.update("com.ssu.mapper.boardMapper.increaseViewcntLog", bno);
+    	else if(where.equals("data"))
+            SqlSession.update("com.ssu.mapper.boardMapper.increaseViewcntData", bno);
     }
     
     //게시글 수 조회
@@ -129,6 +144,9 @@ public class BoardDAOImpl implements BoardDAO {
     	}
     	else if(where.equals("recruit_board")){
     		return SqlSession.selectOne("com.ssu.mapper.boardMapper.countArticleRecruit");
+    	}
+    	else if(where.equals("data_board")){
+    		return SqlSession.selectOne("com.ssu.mapper.boardMapper.countArticleData");
     	}
     	else{ //(where.equals("log_board")){
     		return SqlSession.selectOne("com.ssu.mapper.boardMapper.countArticleLog");

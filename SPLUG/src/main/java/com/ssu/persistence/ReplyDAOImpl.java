@@ -30,6 +30,9 @@ public class ReplyDAOImpl implements ReplyDAO {
 		else if(where.equals("<선배의 잡담>")){
 	        return sqlSession.selectList("com.ssu.mapper.replyMapper.listReplyRecruit", bno);
 		}
+		else if(where.equals("<자료실>")){
+	        return sqlSession.selectList("com.ssu.mapper.replyMapper.listReplyData", bno);
+		}
 		else{ //if(where.equals("<회의록>")){
 	        return sqlSession.selectList("com.ssu.mapper.replyMapper.listReplyLog", bno);
 		}    	
@@ -47,6 +50,9 @@ public class ReplyDAOImpl implements ReplyDAO {
 		}
 		else if(where.equals("<선배의 잡담>")){
 	        sqlSession.insert("com.ssu.mapper.replyMapper.insertReplyRecruit", vo);
+		}
+		else if(where.equals("<자료실>")){
+	        sqlSession.insert("com.ssu.mapper.replyMapper.insertReplyData", vo);
 		}
 		else{ //if(where.equals("<회의록>")){
 	        sqlSession.insert("com.ssu.mapper.replyMapper.insertReplyLog", vo);

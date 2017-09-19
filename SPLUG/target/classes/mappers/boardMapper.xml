@@ -76,7 +76,23 @@
 		regdate desc
 		LIMIT #{start} , #{end}
 	</select>
-
+	<select id="listAllData" resultType="com.ssu.domain.BoardVO">
+		SELECT
+		bno,
+		title,
+		content,
+		writer,
+		regdate,
+		viewcnt,
+		(SELECT COUNT(*) FROM reply_data WHERE
+		bno=data_board.bno) AS recnt
+		FROM
+		data_board
+		ORDER BY
+		bno desc,
+		regdate desc
+		LIMIT #{start} , #{end}
+	</select>
 
 
 	<!-- 02. 게시글 작성 -->
@@ -140,7 +156,21 @@
 		#{regdate}
 		)
 	</insert>
+	<insert id="insertData">
 
+		INSERT INTO data_board (
+		title,
+		content,
+		writer,
+		regdate
+		)
+		VALUES (
+		#{title},
+		#{content},
+		#{writer},
+		#{regdate}
+		)
+	</insert>
 
 
 
@@ -177,6 +207,13 @@
 		WHERE
 		bno = #{bno}
 	</select>
+		<select id="viewData" resultType="com.ssu.domain.BoardVO">
+		SELECT *,(SELECT COUNT(*) FROM
+		reply_data WHERE bno=data_board.bno) AS
+		recnt FROM data_board
+		WHERE
+		bno = #{bno}
+	</select>
 
 	<!-- 04. 게시글 조회수 증가처리 -->
 	<update id="increaseViewcntAgora">
@@ -198,6 +235,11 @@
 
 	<update id="increaseViewcntLog">
 		UPDATE log_board SET viewcnt = viewcnt + 1
+		WHERE bno =
+		#{bno}
+	</update>
+	<update id="increaseViewcntData">
+		UPDATE data_board SET viewcnt = viewcnt + 1
 		WHERE bno =
 		#{bno}
 	</update>
@@ -239,6 +281,14 @@
 		writer = #{writer}
 		WHERE bno = #{bno}
 	</update>
+	<update id="updateArticleData">
+		UPDATE data_board SET
+		title = #{title},
+		content =
+		#{content},
+		writer = #{writer}
+		WHERE bno = #{bno}
+	</update>
 
 	<!-- 06. 게시글 삭제처리 -->
 	<delete id="deleteArticleAgora">
@@ -260,6 +310,11 @@
 		DELETE FROM log_board
 		WHERE bno = #{bno}
 	</delete>
+	<delete id="deleteArticleData">
+		DELETE FROM data_board
+		WHERE bno = #{bno}
+	</delete>
+	
 
 
 	<!-- 07. 게시글 수 조회처리 -->
@@ -278,5 +333,9 @@
 	<select id="countArticleRecruit" resultType="java.lang.Integer">
 		select count(*) from
 		recruit_board
+	</select>
+	<select id="countArticleData" resultType="java.lang.Integer">
+		select count(*) from
+		data_board
 	</select>
 </mapper>

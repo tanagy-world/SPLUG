@@ -24,6 +24,10 @@
 		INSERT INTO reply_log ( bno, replytext, replyer)
 		VALUES ( #{bno}, #{replytext}, #{replyer})
 	</insert>
+	<insert id="insertReplyData">
+		INSERT INTO reply_data ( bno, replytext, replyer)
+		VALUES ( #{bno}, #{replytext}, #{replyer})
+	</insert>
 
 	<!-- 댓글 목록 -->
 	<select id="listReplyAgora" resultType="com.ssu.domain.ReplyVO">
@@ -51,6 +55,13 @@
 		SELECT rno, bno, replytext, replyer, userName, r.regdate,
 		r.updatedate
 		FROM reply_log r
+		WHERE bno=#{bno}
+		ORDER BY rno
+	</select>
+	<select id="listReplyData" resultType="com.ssu.domain.ReplyVO">
+		SELECT rno, bno, replytext, replyer, userName, r.regdate,
+		r.updatedate
+		FROM reply_data r
 		WHERE bno=#{bno}
 		ORDER BY rno
 	</select>

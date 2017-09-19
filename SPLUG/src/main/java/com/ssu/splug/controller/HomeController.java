@@ -150,11 +150,32 @@ public class HomeController {
 		return "galary";
 	}
 	@RequestMapping(value = "data", method = RequestMethod.GET)
-	public String data(Locale locale, Model model) {
+	public ModelAndView data(Locale locale, @RequestParam(defaultValue="1") int curPage) throws Exception{
 		logger.info("client at data", locale);
-
+		  // 레코드의 갯수 계산
+	    int count = boardService.countArticle("data_board");
+	    	    
+	    // 페이지 나누기 관련 처리
+	    BoardPager boardPager = new BoardPager(count, curPage);
+	    int start = boardPager.getPageBegin()-1;
+	    int end = boardPager.getPageEnd();
+	    	
 		
-		return "data";
+        List<BoardVO> list = boardService.listAll(start,end,"data");
+        
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("list", list); // list
+        map.put("count", count); // 레코드의 갯수
+        map.put("boardPager", boardPager);
+        
+        
+        // ModelAndView - 모델과 뷰
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("data"); // 뷰를 list.jsp로 설정
+        mv.addObject("map", map); // 데이터를 저장
+        
+                
+		return mv;
 	}
 	@RequestMapping(value = "log", method = RequestMethod.GET)
 	public ModelAndView meetingLog(Locale locale, @RequestParam(defaultValue="") String keyword,
