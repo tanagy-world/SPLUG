@@ -28,7 +28,16 @@ public class BoardDAOImpl implements BoardDAO {
     		SqlSession.insert("com.ssu.mapper.boardMapper.insertLog", vo);
     	else if(where.equals("data"))
     		SqlSession.insert("com.ssu.mapper.boardMapper.insertData", vo);
+    	
     }
+    
+	@Override
+	public void create(Map<String, Object> map, String where) throws Exception {
+		// TODO Auto-generated method stub
+		if(where.equals("data_upload")){
+			SqlSession.insert("com.ssu.mapper.boardMapper.insertDataUpload",map);
+		}
+	}
     // 02. 게시글 상세보기
     @Override
     public BoardVO read(int bno,String where) throws Exception {
@@ -153,6 +162,7 @@ public class BoardDAOImpl implements BoardDAO {
     	}
 				
 	}
+
 
  
 }

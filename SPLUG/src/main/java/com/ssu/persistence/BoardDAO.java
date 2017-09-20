@@ -1,14 +1,14 @@
 package com.ssu.persistence;
 
-import java.util.List; 
-
-import org.mybatis.spring.annotation.MapperScan;
+import java.util.List;
+import java.util.Map;
 
 import com.ssu.domain.BoardVO;
 
 public interface BoardDAO {
     // 01. 게시글 작성
     public void create(BoardVO vo,String where) throws Exception;
+    public void create(Map<String,Object> map,String where) throws Exception;
     // 02. 게시글 상세보기
     public BoardVO read(int bno,String where) throws Exception;
     // 03. 게시글 수정

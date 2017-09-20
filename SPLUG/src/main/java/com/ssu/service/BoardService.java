@@ -2,6 +2,7 @@ package com.ssu.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.ssu.domain.BoardVO;
@@ -9,6 +10,7 @@ import com.ssu.domain.BoardVO;
 public interface BoardService {
     // 01. 게시글 작성
     public void create(BoardVO vo, String where) throws Exception;
+    public void create(BoardVO vo, String where,HttpServletRequest request) throws Exception;
     // 02. 게시글 상세보기
     public BoardVO read(int bno, String where) throws Exception;
     // 03. 게시글 수정

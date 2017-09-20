@@ -62,7 +62,7 @@ public class BoardController {
 	
 	
 	@RequestMapping(value = "writeContent", method = RequestMethod.POST)
-	 public String writeContetent(@ModelAttribute BoardVO vo,@RequestParam String where,Model model) throws Exception {	
+	 public String writeContetent(@ModelAttribute BoardVO vo,@RequestParam String where,Model model,HttpServletRequest request) throws Exception {	
 		
 		String path="home";
 				
@@ -84,7 +84,7 @@ public class BoardController {
 		}
 		else if(where.equals("<자료실>")){
 			path="data";
-		    boardService.create(vo,"data");
+		    boardService.create(vo,"data",request);
 		}
 			
 		return "redirect:"+path;

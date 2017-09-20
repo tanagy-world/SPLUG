@@ -20,11 +20,15 @@
 			<br>
 
 
-			<form name="form" action="writeContent" method="post">
+			<form name="form" action="writeContent" method="post" enctype="multipart/form-data">
 				<input name="writer" class="form-control" placeholder="글쓴이">
 				<input name="title" class="form-control" placeholder="제목을 입력하세요">
 				<textarea name="content" id="summernote"></textarea>
 				<br> <input type="hidden" name="where" value="${where}">
+				<c:if test="${where=='<자료실>' }">
+				<input type="file" name="file">
+				<BR/>
+				</c:if>
 				<button type="button" id="btnWrite" class="btn btn-primary">작성완료</button>
 			</form>
 

@@ -171,6 +171,21 @@
 		#{regdate}
 		)
 	</insert>
+		<insert id="insertDataUpload" parameterType="map" useGeneratedKeys="true" keyProperty="bno">
+		<selectKey keyProperty="bno" resultType="integer" order="BEFORE">
+        SELECT MAX(bno) FROM data_board
+    	</selectKey>
+		INSERT INTO data_board_attach (
+		fullname,
+		bno,
+		size
+		)
+		VALUES (
+		#{fullname},
+		#{bno},
+		#{size}
+		)
+	</insert>
 
 
 
