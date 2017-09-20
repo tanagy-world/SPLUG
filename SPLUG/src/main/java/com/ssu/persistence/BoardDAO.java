@@ -11,6 +11,8 @@ public interface BoardDAO {
     public void create(Map<String,Object> map,String where) throws Exception;
     // 02. 게시글 상세보기
     public BoardVO read(int bno,String where) throws Exception;
+    public Map<String,Object> read(int bno) throws Exception;
+	public Map<String, Object> read_file_info(int bno) throws Exception;
     // 03. 게시글 수정
     public void update(BoardVO vo,String where) throws Exception;
     // 04. 게시글 삭제

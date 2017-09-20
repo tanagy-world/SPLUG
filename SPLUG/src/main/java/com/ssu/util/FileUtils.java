@@ -51,7 +51,7 @@ public class FileUtils {
                  
                 listMap = new HashMap<String,Object>();
                 listMap.put("bno", boardIdx);
-                //listMap.put("ORIGINAL_FILE_NAME", originalFileName);
+                listMap.put("oriname", originalFileName);
                 listMap.put("fullname", storedFileName);
                 listMap.put("size", multipartFile.getSize());
                 list.add(listMap);

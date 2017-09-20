@@ -1,13 +1,16 @@
 package com.ssu.splug.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
+import java.io.File;
+import java.net.URLEncoder;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -108,7 +111,6 @@ public class BoardController {
         mv.addObject("dto", boardService.read(bno,where));
         mv.addObject("curPage",curPage);
         
-        System.out.println("DTO  : " +  boardService.read(bno,where).getRecnt());
              
 		if(where.equals("agora")){
 			where="<자유게시판>";
@@ -120,9 +122,10 @@ public class BoardController {
 			where="<선배의 잡담>";
 		else if (where.equals("log"))
 			where="<회의록>";
-		else if (where.equals("data"))
+		else if (where.equals("data")){
 			where="<자료실>";
-		        
+	        mv.addObject("file_info", boardService.read(bno));
+		}
         mv.addObject("where",where);
                         
         return mv;
@@ -188,5 +191,24 @@ public class BoardController {
     	boardService.delete(bno,where);
         return "redirect:"+where;
     }
+    
+    @RequestMapping(value="downloadFile")
+    public void downloadFile(@RequestParam Map<String,Object> getParam, HttpServletResponse response) throws Exception{
+    	Map<String,Object> map = boardService.read_file_info(Integer.parseInt((String) getParam.get("bno")));
+        String storedFileName = (String)map.get("fullname");
+        String originalFileName = (String)map.get("oriname");
+        byte fileByte[] = FileUtils.readFileToByteArray(new File("C:\\Users\\hbLee\\git\\SPLUG\\SPLUG\\src\\main\\webapp\\resources\\upload\\"+storedFileName));
+         
+        response.setContentType("application/octet-stream");
+        response.setContentLength(fileByte.length);
+        response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(originalFileName,"UTF-8")+"\";");
+        response.setHeader("Content-Transfer-Encoding", "binary");
+        response.getOutputStream().write(fileByte);
+         
+        response.getOutputStream().flush();
+        response.getOutputStream().close();
+    }
+
+
 	
 }

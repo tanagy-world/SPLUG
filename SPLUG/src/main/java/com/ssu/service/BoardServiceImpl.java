@@ -111,6 +111,17 @@ public class BoardServiceImpl implements BoardService {
 	public BoardVO read(int bno, String where) throws Exception {
 		return boardDao.read(bno, where);
 	}
+	
+	@Override
+	public Map<String, Object> read(int bno) throws Exception {
+		// TODO Auto-generated method stub
+		return boardDao.read(bno);
+	}
+	@Override
+	public Map<String, Object> read_file_info(int bno) throws Exception {
+		// TODO Auto-generated method stub
+		return boardDao.read_file_info(bno);
+	}
 
 	// 03. 게시글 수정
 	@Override
@@ -160,5 +171,7 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.countArticle(where);
 
 	}
+
+	
 
 }

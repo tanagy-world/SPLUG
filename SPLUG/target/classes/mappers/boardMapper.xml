@@ -90,10 +90,10 @@
 		data_board
 		ORDER BY
 		bno desc,
-		regdate desc
+		regdate
+		desc
 		LIMIT #{start} , #{end}
 	</select>
-
 
 	<!-- 02. 게시글 작성 -->
 	<insert id="insertAgora">
@@ -171,19 +171,22 @@
 		#{regdate}
 		)
 	</insert>
-		<insert id="insertDataUpload" parameterType="map" useGeneratedKeys="true" keyProperty="bno">
+	<insert id="insertDataUpload" parameterType="map"
+		useGeneratedKeys="true" keyProperty="bno">
 		<selectKey keyProperty="bno" resultType="integer" order="BEFORE">
-        SELECT MAX(bno) FROM data_board
-    	</selectKey>
+			SELECT MAX(bno) FROM data_board
+		</selectKey>
 		INSERT INTO data_board_attach (
 		fullname,
 		bno,
-		size
+		size,
+		oriname
 		)
 		VALUES (
 		#{fullname},
 		#{bno},
-		#{size}
+		#{size},
+		#{oriname}
 		)
 	</insert>
 
@@ -208,25 +211,51 @@
 	</select>
 
 	<select id="viewRecruit" resultType="com.ssu.domain.BoardVO">
-		SELECT *,(SELECT COUNT(*) FROM
+		SELECT *,(SELECT COUNT(*)
+		FROM
 		reply_recruit WHERE bno=recruit_board.bno) AS
-		recnt FROM recruit_board
+		recnt FROM
+		recruit_board
 		WHERE
 		bno = #{bno}
 	</select>
-	
+
 	<select id="viewLog" resultType="com.ssu.domain.BoardVO">
 		SELECT *,(SELECT COUNT(*) FROM
 		reply_log WHERE bno=log_board.bno) AS
 		recnt FROM log_board
 		WHERE
-		bno = #{bno}
+		bno =
+		#{bno}
 	</select>
-		<select id="viewData" resultType="com.ssu.domain.BoardVO">
+	<select id="viewData" resultType="com.ssu.domain.BoardVO">
 		SELECT *,(SELECT COUNT(*) FROM
 		reply_data WHERE bno=data_board.bno) AS
 		recnt FROM data_board
 		WHERE
+		bno =
+		#{bno}
+	</select>
+	
+		<select id="selectFileList" parameterType="integer" resultType="hashmap">
+		SELECT
+		bno,
+		oriname,
+		ROUND(size/1024,1) AS file_size
+		FROM
+		data_board_attach
+		WHERE
+		bno = #{bno}
+
+	</select>
+	<select id="listAllFile" parameterType="integer" resultType="map">
+		select 
+		fullname,
+		bno,
+		size,
+		oriname
+		from data_board_attach 
+		where
 		bno = #{bno}
 	</select>
 
@@ -255,7 +284,8 @@
 	</update>
 	<update id="increaseViewcntData">
 		UPDATE data_board SET viewcnt = viewcnt + 1
-		WHERE bno =
+		WHERE bno
+		=
 		#{bno}
 	</update>
 
@@ -329,7 +359,7 @@
 		DELETE FROM data_board
 		WHERE bno = #{bno}
 	</delete>
-	
+
 
 
 	<!-- 07. 게시글 수 조회처리 -->

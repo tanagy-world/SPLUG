@@ -14,6 +14,27 @@
 
 <script>
 	$(document).ready(function() {
+
+		$("a[name='file']").on("click", function(e) { //파일 이름
+			e.preventDefault();
+			var bno = document.form.bno.value;
+
+			document.form.method = "POST";
+			document.form.action = "downloadFile";
+			document.form.submit();
+		});
+	});
+
+	function fn_downloadFile(bno) {
+		var comSubmit = new ComSubmit();
+		comSubmit.setUrl("<c:url value='downloadFile'/>");
+		comSubmit.addParam("bno", bno);
+		comSubmit.submit();
+		alert(bno);
+
+	}
+	
+	$(document).ready(function() {
 		$('#summernote').summernote({
 			height : 100, // 에디터의 높이 
 			minHeight : null,
@@ -74,6 +95,9 @@
 											else if (where == "<선배의 잡담>")
 												document.form.action = "recruit?curPage="
 														+ curPage;
+											else if (where == "<자료실>")
+												document.form.action = "data?curPage="
+														+ curPage;
 
 											document.form.submit();
 
@@ -90,8 +114,9 @@
 											var param = "replytext="
 													+ replytext + "&bno=" + bno
 													+ "&where=" + where;
-											
-											$('#summernote').summernote('reset');
+
+											$('#summernote')
+													.summernote('reset');
 
 											$.ajax({
 												type : "post",
@@ -111,7 +136,7 @@
 			url : "listReply?bno=${dto.bno}&where=${where}",
 			success : function(result) {
 				// responseText가 result에 저장됨.
-				
+
 				$("#listReply").html(result);
 			}
 		});
@@ -157,23 +182,34 @@
 								id="content" data-columns="tech-companies-1-col-1">${dto.content}</td>
 						</tr>
 
+						<tr>
+							<td><c:if test="${file_info.oriname eq null}">첨부파일이 없습니다.</c:if>
+								<c:if test="${file_info.oriname ne null}">
+									<a href="#this" name="file">${file_info.oriname }</a>
+                        			(${file_info.file_size }kb)
+								</c:if></td>
+							<td>첨부파일</td>
+						</tr>
+
+
 
 					</tbody>
 				</table>
 
 
-				<input type="hidden" name="bno" value="${dto.bno}" /> <input
-					type="hidden" name="writer" value="${dto.writer}" /> <input
-					type="hidden" name="title" value="${dto.title}" /> <input
-					type="hidden" name="content" value="${dto.content}" /> <input
-					type="hidden" name="regdate" value="${dto.regdate}" /> <input
-					type="hidden" name="viewcnt" value="${dto.viewcnt}" /> <input
-					type="hidden" name="where" value="${where}" /> <input
-					type="hidden" name="curPage" value="${curPage}" /> <br>
+				<input type="hidden" name="bno" id="bno" value="${dto.bno}" /> <input
+					type="hidden" name="writer" id="writer" value="${dto.writer}" /> <input
+					type="hidden" name="title" id="title" value="${dto.title}" /> <input
+					type="hidden" name="content" id="content" value="${dto.content}" />
+				<input type="hidden" name="regdate" id="regdate"
+					value="${dto.regdate}" /> <input type="hidden" name="viewcnt"
+					id="viewcnt" value="${dto.viewcnt}" /> <input type="hidden"
+					name="where" id="where" value="${where}" /> <input type="hidden"
+					name="curPage" id="curPage" value="${curPage}" /> <br>
 
 
-				
-				
+
+
 				<!-- 댓글 들어감 -->
 
 				<div id="listReply"></div>
@@ -218,7 +254,6 @@
 
 		</div>
 	</div>
-
 
 
 </body>
