@@ -7,5 +7,6 @@ import com.ssu.domain.MemberVO;
 public interface memberService {
 	public boolean registration(MemberVO vo);
 	public boolean logincheck(MemberVO vo, HttpSession session);
+	public boolean idCheck(String id);
 	public void logout(HttpSession session);
 }
