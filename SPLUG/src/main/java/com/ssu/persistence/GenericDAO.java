@@ -13,4 +13,6 @@ public interface GenericDAO<E, K> {
 
 	public List<E> getList();
 
+	public boolean idCheck(String id);
+
 }

@@ -39,5 +39,14 @@ public abstract class GenericDAOImpl<E, K> implements GenericDAO<E, K> {
 	public List<E> getList() {
 		return sqlSession.selectList(namespace + ".getList");
 	}
+	
+	@Override
+	public boolean idCheck(String id) {
+		if(sqlSession.selectOne(namespace + ".idCheck", id) == null)
+			return false;
+		else
+			return true;
+	}
+	
 
 }

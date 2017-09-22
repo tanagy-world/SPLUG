@@ -28,13 +28,8 @@ public class memberServiceImpl implements memberService{
 	@Transactional
 	@Override
 	public boolean registration(MemberVO vo) {
-		// TODO Auto-generated method stub
-		MemberVO vo2 = dao.get(vo.getUserid());
-		
-		System.out.println("vo : "+vo.getUserid());
-		System.out.println("vo2 : " + vo2);
-		
-		if(vo2 == null) {
+		// TODO Auto-generated method stub		
+		if(dao.get(vo.getUserid())==null) {
 			dao.register(vo);
 			return true;
 		}
@@ -45,5 +40,12 @@ public class memberServiceImpl implements memberService{
 	public void logout(HttpSession session) {
 		// TODO Auto-generated method stub
 		session.invalidate();
+	}
+
+	@Override
+	public boolean idCheck(String id) {
+		// TODO Auto-generated method stub
+		
+		return dao.idCheck(id);
 	}
 }

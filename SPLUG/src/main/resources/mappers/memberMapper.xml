@@ -13,6 +13,11 @@
 		where userid = #{userid} and userpw = #{userpw};
 	</select>
 	
+	<select id="idCheck" parameterType="String" resultType="String" >
+		select username as userName from member
+		where userid = #{userid};
+	</select>
+	
 	<select id="get" resultType="com.ssu.domain.MemberVO">
 		select *
 		from member
